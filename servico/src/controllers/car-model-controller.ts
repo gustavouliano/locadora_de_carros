@@ -11,18 +11,14 @@ class CarModelController {
             airbag: request.body.airbag,
             abs: request.body.abs
         }
-
         const inputError = this.validateData(carModel);
         if (inputError.length) {
             return reply.status(403).send({ error: inputError });
         }
-
         carModel = await DataApi.saveCarModel(carModel);
-
         if (!carModel) {
             return reply.status(500).send({ error: ['Internal Server Error'] });
         }
-
         return reply.status(201).send({ carModel })
     }
 

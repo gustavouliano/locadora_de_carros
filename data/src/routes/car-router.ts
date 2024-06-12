@@ -1,12 +1,13 @@
 import { FastifyInstance } from "fastify";
 import { Static, Type } from '@sinclair/typebox';
 import CarModelRepository from "../repositories/car-model-repository";
+import CarRepository from "../repositories/car-repository";
 
 class CarRouter {
 
     public constructor(
         private server: FastifyInstance,
-        private carModelRepository: CarModelRepository
+        private carRepository: CarRepository
     ) { }
 
     public execute() {
@@ -18,7 +19,8 @@ class CarRouter {
             },
             async (request, reply) => {
                 await this.carRepository.save(request, reply);
-            });
+            }
+        );
 
         this.server.get('/api-data/carro', async (request, reply) => {
 

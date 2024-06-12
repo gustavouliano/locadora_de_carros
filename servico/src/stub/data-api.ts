@@ -1,6 +1,8 @@
 import axios from "axios";
 import { CarModelCreateInputType } from "../routes/car-model-router";
 import { CarCreateInputType } from "../routes/car-router";
+import { CustomerCreateInputType } from "../routes/customer-router";
+import { RentalCreateInputType } from "../routes/rental-router";
 
 class DataApi {
 
@@ -12,13 +14,11 @@ class DataApi {
                 'content-type': 'application/json',
             },
             data: carModel
-        })
-            .then(response => {
-                carModel = response.data;
-            })
-            .catch(error => {
-                throw new Error(error);
-            });
+        }).then(response => {
+            carModel = response.data;
+        }).catch(error => {
+            throw new Error(error);
+        });
         return carModel;
     }
 
@@ -30,16 +30,14 @@ class DataApi {
             headers: {
                 'content-type': 'application/json',
             }
-        })
-            .then(response => {
-                carModel = response.data;
-            })
-            .catch(error => {
-                throw new Error(error);
-            });
+        }).then(response => {
+            carModel = response.data;
+        }).catch(error => {
+            throw new Error(error);
+        });
         return carModel;
     }
-    
+
     static async saveCar(car: CarCreateInputType) {
         await axios({
             method: 'post',
@@ -48,86 +46,85 @@ class DataApi {
                 'content-type': 'application/json',
             },
             data: car
-        })
-            .then(response => {
-                car = response.data;
-            })
-            .catch(error => {
-                throw new Error(error);
-            });
+        }).then(response => {
+            car = response.data;
+        }).catch(error => {
+            throw new Error(error);
+        });
         return car;
     }
 
-    static async getUserByEmail(email: string): Promise<any> {
-        let user = null;
+    static async findCarById(id: String) {
+        let car = null;
         await axios({
             method: 'get',
-            url: 'http://172.18.0.2:3001/data/user/' + email,
+            url: 'http://localhost:8010/api-data/carro/' + id,
             headers: {
-                'content-type': 'application/json',
-            }
+                'Content-Type': 'application/json',
+            },
+        }).then(response => {
+            car = response.data
+        }).catch(error => {
+            throw new Error(error);
         })
-            .then(response => {
-                user = response.data;
-            })
-            .catch(error => {
-                throw new Error(error);
-            });
-        return user;
+        return car;
     }
 
-    static async addProduct(userId: string, description: string, quantity: number) {
+    static async saveCustomer(customer: CustomerCreateInputType) {
         await axios({
             method: 'post',
-            url: 'http://172.18.0.2:3001/data/products/',
+            url: 'http://localhost:8010/api-data/cliente',
             headers: {
-                'content-type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            data: {
-                userId, description, quantity
-            }
+            data: customer
+        }).then(response => {
+            customer = response.data;
+        }).catch(error => {
+            throw new Error(error);
         })
-            .then(response => {
-            })
-            .catch(error => {
-                throw new Error(error);
-            });
+        return customer;
     }
 
-    static async removeProduct(userId: string, productDescription: string) {
-        await axios({
-            method: 'delete',
-            url: 'http://172.18.0.2:3001/data/products/' + userId,
-            headers: {
-                'content-type': 'application/json',
-            },
-            data: {
-                productDescription
-            }
-        })
-            .then(response => {
-            })
-            .catch(error => {
-                throw new Error(error);
-            });
-    }
-
-    static async listProduct(userId: string) {
-        let products: any[] = [];
+    static async findCustomers() {
+        let customers: any[] = [];
         await axios({
             method: 'get',
-            url: 'http://172.18.0.2:3001/data/products/' + userId,
+            url: 'http://localhost:8010/api-data/cliente',
             headers: {
-                'content-type': 'application/json',
-            },
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            customers = response.data;
+        }).catch(error => {
+            throw new Error(error);
         })
-            .then(response => {
-                products = response.data;
-            })
-            .catch(error => {
-                throw new Error(error);
-            });
-        return products;
+        return customers;
+    }
+
+    static async findCustomerById(id: String) {
+        let customer = null;
+        await axios({
+            method: 'get',
+            url: 'http://loocalhost:8010/api-data/cliente/' + id,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            customer = response.data;
+        }).catch(error => {
+            throw new Error(error);
+        });
+        return customer;
+    }
+
+    static async saveRental(rental: RentalCreateInputType) {
+        // TODO
+        return rental;
+    }
+
+    static async findRentals() {
+
     }
 
 }

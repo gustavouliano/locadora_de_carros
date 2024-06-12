@@ -12,28 +12,19 @@ new CarModelRouter(server, carModelRepository).execute();
 
 
 
-(function () {
-    createMongooseConnection()
-        .then(async() => {
-            console.log('Conexão com MongoDB estabelecida.')
-            initServer();
-            // const carModel = new CarModel({
-            //     id: "123653161",
-            //     name: "testename",
-            //     brand: "testebrand",
-            //     airbag: false,
-            //     abs: true,
-            // });
-            // carModel.save();
+// (function () {
+//     createMongooseConnection()
+//         .then(async() => {
+//             console.log('Conexão com MongoDB estabelecida.')
+//             initServer();
+//         })
+//         .catch(err => {
+//             console.log(err);
+//             console.log('Erro ao conectar-se ao mongodb.')
+//         });
+// })();
 
-            // const a = await ModelCarModel.find();
-            // console.log(a);
-        })
-        .catch(err => {
-            console.log(err);
-            console.log('Erro ao conectar-se ao mongodb.')
-        });
-})();
+initServer();
 
 function initServer(){
     server.listen({ port: 8010 }, (err, address) => {
@@ -41,7 +32,6 @@ function initServer(){
             console.log(err);
             process.exit(1);
         }
-    
         console.log(`Server listening at ${address}`);
     });
 }

@@ -11,18 +11,14 @@ class CarController {
             plate: request.body.plate,
             km: request.body.km
         }
-
         const inputError = await this.validateData(car);
         if (inputError.length) {
             return reply.status(403).send({ error: inputError });
         }
-
         car = await DataApi.saveCar(car);
-
         if (!car) {
             return reply.status(500).send({ error: ['Internal Server Error'] });
         }
-
         return reply.status(201).send({ car })
     }
 
