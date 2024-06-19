@@ -119,12 +119,35 @@ class DataApi {
     }
 
     static async saveRental(rental: RentalCreateInputType) {
-        // TODO
+        await axios({
+            method: 'post',
+            url: 'http://localhost:8010/api-data/locacao',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: rental
+        }).then(response => {
+            rental = response.data;
+        }).catch(error => {
+            throw new Error(error);
+        })
         return rental;
     }
 
     static async findRentals() {
-
+        let rentals: any[] = [];
+        await axios({
+            method: 'get',
+            url: 'http://localhost:8010/api-data/locacao',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            rentals = response.data;
+        }).catch(error => {
+            throw new Error(error);
+        })
+        return rentals;
     }
 
 }

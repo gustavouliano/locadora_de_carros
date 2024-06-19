@@ -28,7 +28,11 @@ class RentalController {
     }
 
     public async find(request: FastifyRequest, reply: FastifyReply) {
-        // TODO
+        const rentals = await DataApi.findRentals();
+        if (!rentals){
+            return reply.status(404).send({ error: ['Não há locações'] });
+        }
+        return reply.status(200).send(rentals);
     }
 
     // public async findById(request: FastifyRequest<{ Params: RentalFindIdType }>, reply: FastifyReply) {

@@ -1,4 +1,3 @@
-
 import { FastifyReply, FastifyRequest } from "fastify";
 import { CarCreateInputType } from "../routes/car-router";
 import DataApi from "../stub/data-api";
