@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { CarCreateInputType, CarFindIdInputType } from "../routes/car-router";
-import DataApi from "../stub/data-api";
+import DataApiRequests from "../stub/data-api-requests";
 
 class CarController {
 
@@ -14,7 +14,7 @@ class CarController {
         if (inputError.length) {
             return reply.status(403).send({ error: inputError });
         }
-        car = await DataApi.saveCar(car);
+        car = await DataApiRequests.saveCar(car);
         if (!car) {
             return reply.status(500).send({ error: ['Internal Server Error'] });
         }
@@ -23,7 +23,7 @@ class CarController {
 
     public async findById(request: FastifyRequest<{ Params: CarFindIdInputType }>, reply: FastifyReply) {
         const { car_id } = request.params;
-        const car = await DataApi.findCarById(car_id);
+        const car = await DataApiRequests.findCarById(car_id);
         if (!car){
             return reply.status(404).send({ error: ['Modelo de carro não encontrado.']});
         }
@@ -31,13 +31,13 @@ class CarController {
     }
 
     public async findAll(request: FastifyRequest, reply: FastifyReply){
-        const cars = await DataApi.findCar();
+        const cars = await DataApiRequests.findCar();
         return reply.status(200).send({ cars })
     }
 
     public async validateData(car: CarCreateInputType): Promise<String[]> {
         const errorMessage: String[] = [];
-        const carModel = await DataApi.findCarModelById(car.carModel);
+        const carModel = await DataApiRequests.findCarModelById(car.carModel);
         if (!carModel) {
             errorMessage.push('O modelo do carro não existe.');
         }

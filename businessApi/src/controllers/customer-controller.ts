@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { CustomerCreateInputType, CustomerFindIdType } from "../routes/customer-router";
-import DataApi from "../stub/data-api";
+import DataApiRequests from "../stub/data-api-requests";
 
 class CustomerController {
 
@@ -12,7 +12,7 @@ class CustomerController {
         if (inputError.length) {
             return reply.status(403).send({ error: inputError });
         }
-        customer = await DataApi.saveCustomer(customer);
+        customer = await DataApiRequests.saveCustomer(customer);
         if (!customer) {
             return reply.status(500).send({ error: ['Internal Server Error'] });
         }
@@ -20,7 +20,7 @@ class CustomerController {
     }
 
     public async find(request: FastifyRequest, reply: FastifyReply) {
-        const customers = await DataApi.findCustomers();
+        const customers = await DataApiRequests.findCustomers();
         if (!customers){
             return reply.status(404).send({ error: ['Não há clientes'] });
         }
@@ -29,7 +29,7 @@ class CustomerController {
 
     public async findById(request: FastifyRequest<{ Params: CustomerFindIdType }>, reply: FastifyReply) {
         let id = request.params.customer_id;
-        const customer = await DataApi.findCustomerById(id);
+        const customer = await DataApiRequests.findCustomerById(id);
         if (!customer){
             return reply.status(404).send({error: ['Cliente não existe']});
         }

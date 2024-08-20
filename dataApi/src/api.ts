@@ -1,4 +1,3 @@
-
 import fastify from 'fastify';
 import CarModelRepository from './repositories/car-model-repository';
 import { CarModelRouter } from './routes/car-model-router';

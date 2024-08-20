@@ -22,9 +22,7 @@ class CarModelRepository {
     }
 
     public async findAll(request: FastifyRequest, reply: FastifyReply){
-        console.log('a');
         const carModels = await ModelCarModel.find();
-        console.log('b');
         return reply.status(200).send(carModels);
     }
 

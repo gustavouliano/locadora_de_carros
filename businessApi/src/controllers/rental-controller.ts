@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import DataApi from "../stub/data-api";
 import { RentalCreateInputType, RentalFindIdInputType } from "../routes/rental-router";
+import DataApiRequests from "../stub/data-api-requests";
 
 class RentalController {
 
@@ -12,15 +12,15 @@ class RentalController {
             end_date: request.body.end_date,
             daily_value: request.body.daily_value
         };
-        const customerExists = await DataApi.findCustomerById(rental.customer_id);
+        const customerExists = await DataApiRequests.findCustomerById(rental.customer_id);
         if (!customerExists) {
             return reply.status(404).send({ error: ['Cliente não existe'] });
         }
-        const car = await DataApi.findCarById(rental.car_id);
+        const car = await DataApiRequests.findCarById(rental.car_id);
         if (!car) {
             return reply.status(404).send({ error: ['Carro não existe'] });
         }
-        rental = await DataApi.saveRental(rental);
+        rental = await DataApiRequests.saveRental(rental);
         if (!rental) {
             return reply.status(500).send({ error: ['Internal Server Error'] });
         }
@@ -28,7 +28,7 @@ class RentalController {
     }
 
     public async find(request: FastifyRequest, reply: FastifyReply) {
-        const rentals = await DataApi.findRentals();
+        const rentals = await DataApiRequests.findRentals();
         if (!rentals){
             return reply.status(404).send({ error: ['Não há locações'] });
         }
@@ -37,7 +37,7 @@ class RentalController {
 
     public async findById(request: FastifyRequest<{ Params: RentalFindIdInputType }>, reply: FastifyReply) {
         const rentalId = request.params.rental_id;
-        const rental = await DataApi.findRentalById(rentalId);
+        const rental = await DataApiRequests.findRentalById(rentalId);
         if (!rental){
             return reply.status(404).send({ error: ['Locação não existe']});
         }
