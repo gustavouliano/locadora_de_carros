@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose'
-import { ICarModelSchema } from './car-model-schema';
 
 interface ICarSchema {
     car_model_id: String,

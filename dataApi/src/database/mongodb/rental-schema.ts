@@ -1,20 +1,20 @@
 import { Schema, model } from 'mongoose'
 
 interface IRentalSchema {
-    customer_id: Schema.Types.ObjectId,
-    car_id: Schema.Types.ObjectId,
+    customer: Schema.Types.ObjectId,
+    car: Schema.Types.ObjectId,
     start_date: Date,
     end_date: Date,
     daily_value: Number
 }
 
 const rentalSchema = new Schema<IRentalSchema>({
-    customer_id: {
+    customer: {
         type: Schema.Types.ObjectId,
         ref: 'Customer',
         required: true
     },  
-    car_id: {
+    car: {
         type: Schema.Types.ObjectId,
         ref: 'Car',
         required: true

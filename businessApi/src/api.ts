@@ -10,7 +10,6 @@ import { CustomerRouter } from './routes/customer-router';
 import { RentalRouter } from './routes/rental-router';
 
 const server = fastify();
-
 server.register(cors, {});
 
 const carModelController = new CarModelController();

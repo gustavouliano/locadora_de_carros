@@ -36,8 +36,8 @@ class RentalRouter {
 }
 
 const RentalCreateInput = Type.Object({
-    customer_id: Type.String(),
-    car_id: Type.String(),
+    customer: Type.String(),
+    car: Type.String(),
     start_date: Type.String(),
     end_date: Type.String(),
     daily_value: Type.Number()

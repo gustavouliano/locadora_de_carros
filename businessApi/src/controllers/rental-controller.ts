@@ -8,17 +8,17 @@ class RentalController {
 
     public async create(request: FastifyRequest<{ Body: RentalCreateInputType }>, reply: FastifyReply) {
         let rental = {
-            customer_id: request.body.customer_id,
-            car_id: request.body.car_id,
+            customer: request.body.customer,
+            car: request.body.car,
             start_date: request.body.start_date,
             end_date: request.body.end_date,
             daily_value: request.body.daily_value
         };
-        const customerExists = await DataApiRequests.findCustomerById(rental.customer_id);
+        const customerExists = await DataApiRequests.findCustomerById(rental.customer);
         if (!customerExists) {
             return reply.status(404).send({ error: ['Cliente não existe'] });
         }
-        const car = await DataApiRequests.findCarById(rental.car_id);
+        const car = await DataApiRequests.findCarById(rental.car);
         if (!car) {
             return reply.status(404).send({ error: ['Carro não existe'] });
         }

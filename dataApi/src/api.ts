@@ -1,4 +1,5 @@
 import fastify from 'fastify';
+import cors from '@fastify/cors';
 import CarModelRepository from './repositories/car-model-repository';
 import { CarModelRouter } from './routes/car-model-router';
 import { createMongooseConnection } from './database/mongodb/connection';
@@ -10,6 +11,7 @@ import { CustomerRouter } from './routes/customer-router';
 import { RentalRouter } from './routes/rental-router';
 
 const server = fastify();
+server.register(cors, {});
 
 const carModelRepository = new CarModelRepository();
 const carRepository = new CarRepository();

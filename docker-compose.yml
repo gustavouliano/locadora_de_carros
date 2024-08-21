@@ -4,8 +4,6 @@ services:
   mongo1:
     image: mongo:7.0
     command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
-    ports:
-      - 27017:27017
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:
@@ -18,35 +16,68 @@ services:
     volumes:
       - "mongo1_data:/data/db"
       - "mongo1_config:/data/configdb"
+    networks:
+      - private_locadora
 
   mongo2:
     image: mongo:7.0
     command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27018"]
-    ports:
-      - 27018:27018
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
       - "mongo2_data:/data/db"
       - "mongo2_config:/data/configdb"
+    networks:
+      - private_locadora
 
   mongo3:
     image: mongo:7.0
     command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27019"]
-    ports:
-      - 27019:27019
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
       - "mongo3_data:/data/db"
       - "mongo3_config:/data/configdb"
+    networks:
+      - private_locadora
 
-  api:
+  business-api:
     build:
       context: ./businessApi
       target: production
     ports:
       - 8000:8000
+    networks:
+      - private_locadora
+
+  business-api2:
+    build:
+      context: ./businessApi
+      target: production
+    ports:
+      - 8001:8000
+    networks:
+      - private_locadora
+
+  business-api3:
+    build:
+      context: ./businessApi
+      target: production
+    ports:
+      - 8002:8000
+    networks:
+      - private_locadora
+
+  data-api:
+    build:
+      context: ./dataApi
+      target: production
+    networks:
+      - private_locadora
+
+networks:
+  private_locadora:
+    driver: bridge
 
 volumes:
   mongo1_data:

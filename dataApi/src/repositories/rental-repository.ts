@@ -6,8 +6,8 @@ class RentalRepository {
 
     public async save(request: FastifyRequest<{ Body: RentalCreateInputType }>, reply: FastifyReply) {
         let rentalModel = new RentalModel({
-            car_id: request.body.car_id,
-            customer_id: request.body.customer_id,
+            car: request.body.car,
+            customer: request.body.customer,
             start_date: request.body.start_date,
             end_date: request.body.end_date,
             daily_value: request.body.daily_value
@@ -23,7 +23,7 @@ class RentalRepository {
     }
 
     public async findAll(request: FastifyRequest, reply: FastifyReply) {
-        const rentalModels = await RentalModel.find();
+        const rentalModels = await RentalModel.find().populate('car', 'plate').populate('customer', 'name');
         return reply.status(200).send(rentalModels);
     }
 

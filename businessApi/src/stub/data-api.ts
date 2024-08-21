@@ -6,7 +6,7 @@ export class DataApi {
         let data: any;
         await axios({
             method,
-            url: `http://localhost:8010/api-data/${route}`,
+            url: `http://data-api:8010/api-data/${route}`,
             headers: {
                 'content-type': 'application/json',
             },
