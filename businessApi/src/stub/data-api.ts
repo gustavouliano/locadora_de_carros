@@ -2,11 +2,11 @@ import axios from "axios";
 
 export class DataApi {
 
-    protected static async doRequest<T>(method: string, route: string, body: T | {} = {}){
+    protected static async doRequest<T>(method: string, route: string, body: object = {}){
         let data: any;
         await axios({
             method,
-            url: `http://localhost:8010/${route}`,
+            url: `http://localhost:8010/api-data/${route}`,
             headers: {
                 'content-type': 'application/json',
             },

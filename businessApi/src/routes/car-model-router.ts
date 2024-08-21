@@ -21,7 +21,6 @@ class CarModelRouter {
             });
 
         this.server.get('/api-servico/carro-modelo', async (request, reply) => {
-            console.log('carro-modelo');
             await this.carModelController.findAll(request, reply);
         });
         

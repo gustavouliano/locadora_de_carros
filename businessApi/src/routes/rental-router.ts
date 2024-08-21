@@ -25,8 +25,12 @@ class RentalRouter {
             await this.rentalController.find(request, reply);
         })
 
-        this.server.get<{ Params: RentalFindIdInputType}>('/api-servico/locacao/:rental_id', async (request, reply) => {
+        this.server.get<{ Params: RentalFindIdInputType }>('/api-servico/locacao/:rental_id', async (request, reply) => {
             await this.rentalController.findById(request, reply);
+        })
+
+        this.server.get('/api-servico/locacao/download', async (request, reply) => {
+            await this.rentalController.generateFileInfo(request, reply);
         })
     }
 }
