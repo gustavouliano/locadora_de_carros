@@ -41,6 +41,13 @@ services:
       - "mongo3_data:/data/db"
       - "mongo3_config:/data/configdb"
 
+  api:
+    build:
+      context: ./businessApi
+      target: production
+    ports:
+      - 8000:8000
+
 volumes:
   mongo1_data:
   mongo2_data:
