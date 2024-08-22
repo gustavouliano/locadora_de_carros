@@ -2,8 +2,10 @@ require('dotenv').config();
 const fastify = require('fastify');
 const businessRouter = require('./routes/business-router');
 const dataRouter = require('./routes/data-router');
+const cors = require('@fastify/cors');
 
 const server = fastify();
+server.register(cors, {});
 
 businessRouter(server);
 dataRouter(server);

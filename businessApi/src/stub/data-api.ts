@@ -8,7 +8,6 @@ export class DataApi {
         let success = false;
 
         do {
-            console.log('a');
             let uri = await DataApi.getUri();
             await axios({
                 method,

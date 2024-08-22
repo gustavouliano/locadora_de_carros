@@ -111,13 +111,15 @@ services:
     build:
       context: ./schedulerApi
       target: production
+    ports:
+      - 8020:8020
     networks:
       - private_locadora
     environment:
       - API_PORT=8020
-      - BUSINESS_API_PORT_1=business-api:8000/api-servico
-      - BUSINESS_API_PORT_2=business-api2:8001/api-servico
-      - BUSINESS_API_PORT_3=business-api3:8002/api-servico
+      - BUSINESS_API_PORT_1=127.0.0.1:8000/api-servico
+      - BUSINESS_API_PORT_2=127.0.0.1:8001/api-servico
+      - BUSINESS_API_PORT_3=127.0.0.1:8002/api-servico
       - DATA_API_PORT_1=data-api:8010/api-data
       - DATA_API_PORT_2=data-api2:8011/api-data
       - DATA_API_PORT_3=data-api3:8012/api-data
