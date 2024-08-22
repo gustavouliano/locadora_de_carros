@@ -18,7 +18,6 @@ class CarRouter {
                 }
             },
             async (request, reply) => {
-                console.log(request.body);  
                 await this.carRepository.save(request, reply);
             }
         );

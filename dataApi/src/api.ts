@@ -1,3 +1,4 @@
+require("dotenv").config();
 import fastify from 'fastify';
 import cors from '@fastify/cors';
 import CarModelRepository from './repositories/car-model-repository';
@@ -23,9 +24,6 @@ new CarRouter(server, carRepository).execute();
 new CustomerRouter(server, customerRepository).execute();
 new RentalRouter(server, rentalRepository).execute();
 
-
-
-
 (function () {
     createMongooseConnection()
         .then(async() => {
@@ -37,11 +35,10 @@ new RentalRouter(server, rentalRepository).execute();
             console.log('Erro ao conectar-se ao mongodb.')
         });
 })();
-    
-// initServer();
 
+const port = process.env.API_PORT ? Number(process.env.API_PORT) : 8010;
 function initServer(){
-    server.listen({ port: 8010 }, (err, address) => {
+    server.listen({ port: port, host: '0.0.0.0' }, (err, address) => {
         if (err) {
             console.log(err);
             process.exit(1);

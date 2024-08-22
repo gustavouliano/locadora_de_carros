@@ -2,22 +2,47 @@ import axios from "axios";
 
 export class DataApi {
 
-    protected static async doRequest<T>(method: string, route: string, body: object = {}){
+    protected static async doRequest<T>(method: string, route: string, body: object = {}): Promise<any> {
+        let attempts = 0;
         let data: any;
+        let success = false;
+
+        do {
+            console.log('a');
+            let uri = await DataApi.getUri();
+            await axios({
+                method,
+                url: `http://${uri}/${route}`,
+                headers: {
+                    'content-type': 'application/json',
+                },
+                data: body
+            }).then(response => {
+                data = response.data;
+                success = true;
+            }).catch(error => {
+                console.log(error);
+                attempts++;
+            });
+            if (success){
+                return data;
+            }
+        } while (attempts < 3);
+        throw new Error('Não foi possível conectar-se à API de dados.');
+    }
+
+    private static async getUri() {
+        let uri = '';
         await axios({
-            method,
-            url: `http://data-api:8010/api-data/${route}`,
-            headers: {
-                'content-type': 'application/json',
-            },
-            data: body
+            method: 'get',
+            url: 'http://scheduler-api:8020/api-scheduler/data'
         }).then(response => {
-            data = response.data;
+            uri = response.data.address;
         }).catch(error => {
             console.log(error);
             throw new Error();
-        });
-        return data;
+        })
+        return uri;
     }
 
 }

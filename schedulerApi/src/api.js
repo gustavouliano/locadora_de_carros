@@ -1,12 +1,15 @@
-const fastify = require('fastify');
 require('dotenv').config();
+const fastify = require('fastify');
 const businessRouter = require('./routes/business-router');
+const dataRouter = require('./routes/data-router');
 
 const server = fastify();
 
 businessRouter(server);
+dataRouter(server);
 
-server.listen({ port : 8020, host: '0.0.0.0' }, (err, address) => {
+const port = process.env.API_PORT ? Number(process.env.API_PORT) : 8020;
+server.listen({ port : port, host: '0.0.0.0' }, (err, address) => {
     if (err) {
         console.log(err);
         process.exit(1);

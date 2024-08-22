@@ -1,3 +1,4 @@
+require("dotenv").config();
 import fastify from 'fastify';
 import cors from '@fastify/cors';
 import { CarModelRouter } from './routes/car-model-router';
@@ -22,7 +23,8 @@ new CarRouter(server, carController).execute();
 new CustomerRouter(server, customerController).execute();
 new RentalRouter(server, rentalController).execute();
 
-server.listen({ port : 8000, host: '0.0.0.0' }, (err, address) => {
+const port = process.env.API_PORT ? Number(process.env.API_PORT) : 8000;
+server.listen({ port: port, host: '0.0.0.0' }, (err, address) => {
     if (err) {
         console.log(err);
         process.exit(1);
